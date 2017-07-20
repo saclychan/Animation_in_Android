@@ -1,11 +1,15 @@
 package ngocamha.com.animation;
 
+import android.graphics.drawable.AnimationDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     Button btnAlpha;
@@ -25,6 +29,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnTranslate.setOnClickListener(this);
         btnRotate  = (Button) findViewById(R.id.btn_rotate);
         btnRotate.setOnClickListener(this);
+        ImageView imageView  = (ImageView) findViewById(R.id.iv);
+
+        imageView.setBackgroundResource(R.drawable.frame_animation);
+        AnimationDrawable animationDrawable = (AnimationDrawable) imageView.getBackground();
+        animationDrawable.start();
     }
 
     @Override
@@ -45,6 +54,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_rotate:
                 Animation animation3 = AnimationUtils.loadAnimation(MainActivity.this, R.anim.rotare_animation);
+                animation3.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        Toast.makeText(MainActivity.this, "Start", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        Toast.makeText(MainActivity.this, "End", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+                        Toast.makeText(MainActivity.this, "Repeat", Toast.LENGTH_SHORT).show();
+                    }
+                });
                 btnRotate.startAnimation(animation3);
                 break;
         }
